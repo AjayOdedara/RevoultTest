@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  PhoneBook
+
+  Created by Shiva's on 11/1/19.
+  Copyright © 2019 Bharat Bapodara. All rights reserved.
+*/
+
+// Currency Pair List View
+
+"currency_pair_add_currency_pair" = "Add Currency Pair";
