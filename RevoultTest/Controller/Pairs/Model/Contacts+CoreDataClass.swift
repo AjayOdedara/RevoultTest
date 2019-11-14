@@ -11,7 +11,7 @@ import CoreData
 
 @objc(CurrencyPair)
 public class CurrencyPair: NSManagedObject {
-    
+    @NSManaged public var pairId: String?
     @NSManaged public var toPairId: String?
     @NSManaged public var toPairName: String?
     @NSManaged public var fromPairId: String?
@@ -29,11 +29,39 @@ public class CurrencyPair: NSManagedObject {
     static func insertInto(_ context: NSManagedObjectContext, pair: CurrrencyRatePairs) {
         // insert into Pair
         let pairToAdd = CurrencyPair(context: context)
+        pairToAdd.pairId = pair.id
         pairToAdd.toPairId = pair.toPairId
         pairToAdd.toPairName = pair.toPairName
         pairToAdd.fromPairId = pair.fromPairId
         pairToAdd.fromPairName = pair.fromPairName
         pairToAdd.currentRates = pair.currentRates
+    }
+    
+    static func update(_ moc: NSManagedObjectContext, pair: CurrrencyRatePairs) -> [NSManagedObjectID]{
+        // Creates new batch update request for entity `Dog`
+        let updateRequest = NSBatchUpdateRequest(entityName: "CurrencyPair")
+        
+        let predicate = NSPredicate(format: "pairId == %@", pair.id)
+        // Assigns the predicate to the batch update
+        updateRequest.predicate = predicate
+        // Sets the result type as array of object IDs updated
+        updateRequest.resultType = .updatedObjectIDsResultType
+
+        // Dictionary with the property names to update as keys and the new values as values
+        updateRequest.propertiesToUpdate = ["currentRates": pair.currentRates]
+        do {
+            // Executes batch
+            let result = try moc.execute(updateRequest) as? NSBatchUpdateResult
+            // Retrieves the IDs updated
+            guard let objectIDs = result?.result as? [NSManagedObjectID] else { return [NSManagedObjectID]() }
+            if objectIDs.count == 0{
+                 return [NSManagedObjectID]()
+            }else{
+                return objectIDs
+            }
+        } catch {
+            fatalError("Failed to execute request: \(error)")
+        }
     }
 }
 //struct CurrentPair {

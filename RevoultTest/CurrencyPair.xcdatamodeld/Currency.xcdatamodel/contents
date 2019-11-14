@@ -4,10 +4,11 @@
         <attribute name="currentRates" optional="YES" attributeType="String"/>
         <attribute name="fromPairId" optional="YES" attributeType="String"/>
         <attribute name="fromPairName" optional="YES" attributeType="String"/>
+        <attribute name="pairId" optional="YES" attributeType="String"/>
         <attribute name="toPairId" optional="YES" attributeType="String"/>
         <attribute name="toPairName" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="CurrencyPair" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="CurrencyPair" positionX="-63" positionY="-18" width="128" height="133"/>
     </elements>
 </model>

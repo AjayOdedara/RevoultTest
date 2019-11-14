@@ -53,7 +53,7 @@ class CurrencyPairViewModel:NSObject{
             switch result {
             case .success(let pairs):
                 print(pairs)
-                self?.preservePairs(data: pairs){ (isSuccess) in
+                self?.updateData(data: pairs){ (isSuccess) in
                     self?.loadCurrenciesPairs { () in
                         self?.delegate?.updateData()
                     }
@@ -75,6 +75,7 @@ class CurrencyPairViewModel:NSObject{
                 return
             }
             
+            
             let context = container.viewContext
             context.automaticallyMergesChangesFromParent = true
             // featching the data from coredata
@@ -91,6 +92,8 @@ class CurrencyPairViewModel:NSObject{
                 self.currentPairs.removeAll()
                 for item in 0...( self.dataProvider?.numberOfItemsInSection(0) ?? 0 ) - 1{
                     let provider = self.dataProvider?.object(at: IndexPath(item: item, section: 0))
+                    print(provider?.pairId)
+                    print(provider?.currentRates)
                     let pair = ( provider?.fromPairId ?? "" ) + ( provider?.toPairId ?? "" )
                     self.currentPairs.append(pair)
                 }
@@ -123,6 +126,30 @@ class CurrencyPairViewModel:NSObject{
                 completionBlock(false)
                 DLog(error.localizedDescription)
             }
+        }
+    }
+    func updateData(data pairToAdd: [CurrrencyRatePairs], _ completionBlock : @escaping (Bool)->()){
+        guard let container = container else {
+            return
+        }
+        container.performBackgroundTask{(moc) in
+            for pair in pairToAdd{
+                
+                let mocIds = CurrencyPair.update(moc, pair: pair)
+                if mocIds.count == 0{
+                    CurrencyPair.insertInto(moc, pair: pair)
+                    do {
+                        try moc.save()
+                    } catch {
+                        DLog(error.localizedDescription)
+                    }
+                }else{
+                    let changes = [NSUpdatedObjectsKey: mocIds]
+                    NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [moc])
+                }
+            }
+            
+            completionBlock(true)
         }
     }
 }

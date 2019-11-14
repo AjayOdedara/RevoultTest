@@ -27,16 +27,33 @@ class CurrencyPairViewController: UIViewController {
         currencyPairViewModel.loadCurrenciesPairs { () in
             // Reload table view when receive call back
             self.reloadTableData()
-//            let pairs = CurrentPair(toPairId: "GBP", toPairName: "British Pounds", fromPairId: "INR", fromPairName: "Indian Rupee", currentRates: "0.98")
-//            self.currencyPairViewModel.preservePairs(data: pairs) { (success) in
-//                print("done")
-//            }
-//            let pairs2 = CurrentPair(toPairId: "INR", toPairName: "Indian Rupee", fromPairId: "GBP", fromPairName: "British Pounds", currentRates: "90.12")
-//            self.currencyPairViewModel.preservePairs(data: pairs2) { (success) in
-//                print("done")
-//            }
+        
         }
         
+        // To add data
+        /*
+         currencyPairViewModel.loadCurrenciesPairs { () in
+         let pairs = CurrrencyRatePairs(dictionary: (key: "INRGBP", value: 0))
+         pairs.id = "INRGBP"
+         pairs.toPairId = "GBP"
+         pairs.toPairName = "British Pounds"
+         pairs.fromPairId = "INR"
+         pairs.fromPairName = "Indian Rupee"
+         pairs.currentRates = "0.90"
+             
+         let pairs2 = CurrrencyRatePairs(dictionary: (key: "GBPUSD", value: 0))
+         pairs2.id = "GBPUSD"
+         pairs2.toPairId = "USD"
+         pairs2.toPairName = "United States"
+         pairs2.fromPairId = "GBP"
+         pairs2.fromPairName = "British Pounds"
+         pairs2.currentRates = "2.12"
+         
+             self.currencyPairViewModel.preservePairs(data: [pairs2,pairs]) { (success) in
+                 print("done")
+             }
+         }
+         */
 
             
     }
