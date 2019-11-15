@@ -36,6 +36,7 @@
 		9AA5A97523771CDE0053DB95 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5A97123771CDE0053DB95 /* Alert.swift */; };
 		9AA5A97723771DD00053DB95 /* CurrencyTableviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5A97623771DD00053DB95 /* CurrencyTableviewCell.swift */; };
 		9AA5A97B2377327B0053DB95 /* currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AA5A97A2377327B0053DB95 /* currencies.json */; };
+		9AA5A97D237E19D60053DB95 /* CurrencyPairCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5A97C237E19D50053DB95 /* CurrencyPairCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		9AA5A97123771CDE0053DB95 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		9AA5A97623771DD00053DB95 /* CurrencyTableviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyTableviewCell.swift; sourceTree = "<group>"; };
 		9AA5A97A2377327B0053DB95 /* currencies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = currencies.json; sourceTree = "<group>"; };
+		9AA5A97C237E19D50053DB95 /* CurrencyPairCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPairCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,6 +316,7 @@
 		9AA0C4E82372443D0035C627 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				9AA5A97C237E19D50053DB95 /* CurrencyPairCellViewModel.swift */,
 				9AA0C4E62372442C0035C627 /* CurrencyPairListCell.swift */,
 			);
 			path = Cell;
@@ -452,6 +455,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AA5A97D237E19D60053DB95 /* CurrencyPairCellViewModel.swift in Sources */,
 				9AA0C4CC23723C1C0035C627 /* CurrencyPair.xcdatamodeld in Sources */,
 				9AA0C4DD23723FEE0035C627 /* AppServerClient.swift in Sources */,
 				9AA5A97223771CDE0053DB95 /* Bindable.swift in Sources */,

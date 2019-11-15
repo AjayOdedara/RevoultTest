@@ -20,29 +20,26 @@ class CurrencyPairListCell: UITableViewCell {
         self.selectionStyle = .none
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
     static var identifier: String {
         // cell reusable identifier
         return String(describing: self)
     }
-    
-    var item: CurrencyPair? {
-        // set cell data
+    var viewModel: CurrencyPairCellViewModel? {
         didSet {
-            
-            print(item?.currentRates)
-            print(item?.fromPairName)
-            
-            fromCurrencyName.text = ( item?.fromPairName ?? "" )
-            currencyRate.text = item?.currentRates ?? ""
-            toCurrencyName.text = ( item?.toPairName ?? "" ) + " " + ( item?.toPairId?.uppercased() ?? "")
-            fromCurrency.text = "1 " + (item?.fromPairId ?? "")
-
-            DLog("Displayed contact list table view cell data")
+            bindViewModel()
         }
+    }
+
+    private func bindViewModel() {
+        print(viewModel?.currentExchangeRate)
+        print(viewModel?.fromPairTitle)
+        
+        fromCurrencyName.text = ( viewModel?.fromPairTitle ?? "" )
+        currencyRate.text = viewModel?.currentExchangeRate ?? ""
+        toCurrencyName.text = ( viewModel?.toPairTitle ?? "" ) + " " + ( viewModel?.toPair.uppercased() ?? "")
+        fromCurrency.text = "1 " + (viewModel?.fromPair ?? "")
+
+        DLog("Displayed contact list table view cell data")
     }
 }
 

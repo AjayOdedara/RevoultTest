@@ -21,6 +21,13 @@ class CurrencyPairViewModel:NSObject{
     var container: NSPersistentContainer?
     var dataProvider: FetchedResultsDataProvider<CurrencyPair>?
     
+    enum CurrencyPairTableViewCellType {
+        case normal(cellViewModel: CurrencyPairCellViewModel)
+        case error(message: String)
+        case empty
+    }
+    let currencyPairCells = Bindable([CurrencyPairTableViewCellType]())
+    
     weak var delegate: UpdateRateDataDelegate?
     var currentPairs = [String]()
     
@@ -31,7 +38,6 @@ class CurrencyPairViewModel:NSObject{
     init(appServerClient: AppServerClient = AppServerClient()) {
         self.appServerClient = appServerClient
     }
-    
     
     /*
      Add currency from list
@@ -53,16 +59,20 @@ class CurrencyPairViewModel:NSObject{
             switch result {
             case .success(let pairs):
                 print(pairs)
-                self?.updateData(data: pairs){ (isSuccess) in
-                    self?.loadCurrenciesPairs { () in
-                        self?.delegate?.updateData()
-                    }
+                guard pairs.count > 0 else {
+                    self?.currencyPairCells.value = [.empty]
+                    return
                 }
+                self?.currencyPairCells.value = pairs.compactMap {
+                    .normal(cellViewModel: $0 as CurrencyPairCellViewModel)
+                }
+//                self?.updateData(data: pairs){ (isSuccess) in
+//                    self?.loadCurrenciesPairs { () in
+//                        self?.delegate?.updateData()
+//                    }
+//                }
             case .failure(let error):
-                print(error?.localizedDescription)
-                self?.loadCurrenciesPairs { () in
-                    self?.delegate?.updateData()
-                }
+                self?.currencyPairCells.value = [.error(message: error?.localizedDescription ?? "Error occurred")]
             }
         })
     }
@@ -83,21 +93,8 @@ class CurrencyPairViewModel:NSObject{
                 let fetchRequest = CurrencyPair.defaultFetchRequest()
                 let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
                 self.dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc)
-                
-                print(self.dataProvider?.numberOfItemsInSection(0))
-                guard ( self.dataProvider?.numberOfItemsInSection(0) ?? 0 ) > 0  else {
-                    completionBlock()
-                    return
-                }
-                self.currentPairs.removeAll()
-                for item in 0...( self.dataProvider?.numberOfItemsInSection(0) ?? 0 ) - 1{
-                    let provider = self.dataProvider?.object(at: IndexPath(item: item, section: 0))
-                    print(provider?.pairId)
-                    print(provider?.currentRates)
-                    let pair = ( provider?.fromPairId ?? "" ) + ( provider?.toPairId ?? "" )
-                    self.currentPairs.append(pair)
-                }
-//                self.getRatesOfCurrentPairs()
+                let data = self.dataProvider?.currencyPairs().map { $0.pairId ?? "" }
+                self.currentPairs = data ?? [""]
                 completionBlock()
             }
         }
@@ -107,26 +104,6 @@ class CurrencyPairViewModel:NSObject{
     func insertIntoPairs(with newPair:String) {
         self.currentPairs.append(newPair)
         getRatesOfCurrentPairs()
-//        completionBlock(false)
-    }
-    
-    func preservePairs(data pairToAdd: [CurrrencyRatePairs], _ completionBlock : @escaping (Bool)->()) {
-        // insert into coredata
-        guard let container = container else {
-            return
-        }
-        container.performBackgroundTask { (managedObjectContext) in
-            for pair in pairToAdd{
-                CurrencyPair.insertInto(managedObjectContext, pair: pair)
-            }
-            do {
-                try managedObjectContext.save()
-                completionBlock(true)
-            } catch {
-                completionBlock(false)
-                DLog(error.localizedDescription)
-            }
-        }
     }
     func updateData(data pairToAdd: [CurrrencyRatePairs], _ completionBlock : @escaping (Bool)->()){
         guard let container = container else {
@@ -159,21 +136,30 @@ extension CurrencyPairViewModel: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // get number of rows count for each section
-        return dataProvider?.numberOfItemsInSection(section) ?? 0
+        return currencyPairCells.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Get managed object
-        guard let provider = dataProvider?.object(at: indexPath) else { return UITableViewCell() }
-        
-        // Configure Cell
-        if let cell = tableView.dequeueReusableCell(withIdentifier: CurrencyPairListCell.identifier, for: indexPath) as? CurrencyPairListCell {
-            // set cell data
-            cell.item = provider
+        switch currencyPairCells.value[indexPath.row] {
+        case .normal(let viewModel):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CurrencyPairListCell.identifier) as? CurrencyPairListCell else {
+                return UITableViewCell()
+            }
+            cell.viewModel = viewModel
+            return cell
+            
+        case .error(let message):
+            let cell = UITableViewCell()
+            cell.isUserInteractionEnabled = false
+            cell.textLabel?.text = message
+            return cell
+            
+        case .empty:
+            let cell = UITableViewCell()
+            cell.isUserInteractionEnabled = false
+            cell.textLabel?.text = "No currencies available"
             return cell
         }
-        DLog("Pairs list table view failed to return cell")
-        return UITableViewCell()
     }
 }
 

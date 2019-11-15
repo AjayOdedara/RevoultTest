@@ -13,6 +13,7 @@ import UIKit
 protocol DataProvider: class {
     associatedtype Object
 
+    func currencyPairs() -> [Object]
     func object(at indexPath: IndexPath) -> Object
     func numberOfItemsInSection(_ section: Int) -> Int
 }

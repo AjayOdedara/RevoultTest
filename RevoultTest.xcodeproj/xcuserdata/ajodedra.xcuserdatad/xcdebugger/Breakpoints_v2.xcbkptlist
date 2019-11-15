@@ -30,8 +30,8 @@
             filePath = "RevoultTest/Controller/Pairs/ViewModel/CurrencyPairViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "insertIntoPairs(with:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -40,20 +40,20 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "AB4DE9A0-02DC-4FF4-9C93-4448DBE4237C"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RevoultTest/Controller/Pairs/ViewModel/CurrencyPairViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "getRatesOfCurrentPairs()"
             landmarkType = "7">
             <Locations>
                <Location
                   uuid = "AB4DE9A0-02DC-4FF4-9C93-4448DBE4237C - 7af4508478c9c493"
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 (RevoultTest.Result&lt;Swift.Array&lt;RevoultTest.CurrrencyRatePairs&gt;, RevoultTest.AppServerClient.GetFailureReason&gt;) -&gt; () in RevoultTest.CurrencyPairViewModel.getRatesOfCurrentPairs() -&gt; ()"
@@ -68,7 +68,7 @@
                </Location>
                <Location
                   uuid = "AB4DE9A0-02DC-4FF4-9C93-4448DBE4237C - 3b3747ab140b647d"
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 (Swift.Bool) -&gt; () in closure #1 (RevoultTest.Result&lt;Swift.Array&lt;RevoultTest.CurrrencyRatePairs&gt;, RevoultTest.AppServerClient.GetFailureReason&gt;) -&gt; () in RevoultTest.CurrencyPairViewModel.getRatesOfCurrentPairs() -&gt; ()"
@@ -88,14 +88,14 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "BAD4184B-5ABB-43C9-B060-C375AEB14414"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RevoultTest/Controller/Pairs/ViewModel/CurrencyPairViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
             landmarkName = "getRatesOfCurrentPairs()"
             landmarkType = "7">
          </BreakpointContent>
@@ -104,20 +104,20 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "842ABF8D-7245-488D-8440-760C2E77943A"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RevoultTest/Controller/Pairs/ViewModel/CurrencyPairViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
             landmarkName = "getRatesOfCurrentPairs()"
             landmarkType = "7">
             <Locations>
                <Location
                   uuid = "842ABF8D-7245-488D-8440-760C2E77943A - 3b3747ab140b647d"
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 (Swift.Bool) -&gt; () in closure #1 (RevoultTest.Result&lt;Swift.Array&lt;RevoultTest.CurrrencyRatePairs&gt;, RevoultTest.AppServerClient.GetFailureReason&gt;) -&gt; () in RevoultTest.CurrencyPairViewModel.getRatesOfCurrentPairs() -&gt; ()"
@@ -132,7 +132,7 @@
                </Location>
                <Location
                   uuid = "842ABF8D-7245-488D-8440-760C2E77943A - 9780be8ce267582e"
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 () -&gt; () in closure #1 (Swift.Bool) -&gt; () in closure #1 (RevoultTest.Result&lt;Swift.Array&lt;RevoultTest.CurrrencyRatePairs&gt;, RevoultTest.AppServerClient.GetFailureReason&gt;) -&gt; () in RevoultTest.CurrencyPairViewModel.getRatesOfCurrentPairs() -&gt; ()"
@@ -158,8 +158,8 @@
             filePath = "RevoultTest/Controller/Pairs/ViewModel/CurrencyPairViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "getRatesOfCurrentPairs()"
             landmarkType = "7">
             <Locations>
@@ -215,22 +215,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A8A85E86-7CE0-402A-994E-143AD5F1E6D2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RevoultTest/Controller/Pairs/ViewModel/CurrencyPairViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
-            landmarkName = "loadCurrenciesPairs(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "5A5C7B00-715D-409C-A346-9D2D98A138A0"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -270,8 +254,8 @@
             filePath = "RevoultTest/Controller/Pairs/ViewModel/CurrencyPairViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "updateData(data:_:)"
             landmarkType = "7">
             <Locations>
@@ -311,32 +295,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6E70E799-DB2A-4169-AFD0-14003A060EA6"
-            shouldBeEnabled = "No"
+            uuid = "7F39C92C-81F9-46E8-AC3B-A1084DA00CFE"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RevoultTest/Controller/Pairs/ViewModel/CurrencyPairViewModel.swift"
+            filePath = "RevoultTest/Controller/Pairs/View/CurrencyPairViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "loadCurrenciesPairs(_:)"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7F39C92C-81F9-46E8-AC3B-A1084DA00CFE - 5b86b5d319a2b9d3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RevoultTest.CurrencyPairViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "RevoultTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ajodedra/Documents/Examples/RevoultTest/RevoultTest/Controller/Pairs/View/CurrencyPairViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "308">
+               </Location>
+               <Location
+                  uuid = "7F39C92C-81F9-46E8-AC3B-A1084DA00CFE - 6d07ed2accb7eae7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in RevoultTest.CurrencyPairViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "RevoultTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ajodedra/Documents/Examples/RevoultTest/RevoultTest/Controller/Pairs/View/CurrencyPairViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "64">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DF29543B-F9E9-4928-8A43-68B1F70BDBD0"
+            uuid = "807D1A92-6119-46F8-987A-7811E9A4ED9C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RevoultTest/Controller/Pairs/ViewModel/CurrencyPairViewModel.swift"
+            filePath = "RevoultTest/Controller/Pairs/View/CurrencyPairViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
-            landmarkName = "preservePairs(data:_:)"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

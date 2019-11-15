@@ -10,6 +10,9 @@
 import CoreData
 
 class FetchedResultsDataProvider<T>: NSObject, NSFetchedResultsControllerDelegate, DataProvider where T: NSFetchRequestResult {
+    
+    
+    
     private let fetchedResultsController: NSFetchedResultsController<T>
 
     init(fetchedResultsController: NSFetchedResultsController<T>) {
@@ -23,7 +26,9 @@ class FetchedResultsDataProvider<T>: NSObject, NSFetchedResultsControllerDelegat
             DLog(error.localizedDescription)
         }
     }
-
+    func currencyPairs() -> [T] {
+        return fetchedResultsController.fetchedObjects ?? [T]()
+    }
     func object(at indexPath: IndexPath) -> T {
         return fetchedResultsController.object(at: indexPath)
     }
