@@ -24,22 +24,16 @@ class CurrencyPairListCell: UITableViewCell {
         // cell reusable identifier
         return String(describing: self)
     }
-    var viewModel: CurrencyPairCellViewModel? {
+    var pair: CurrencyPair? {
+        // set cell data
         didSet {
-            bindViewModel()
+            fromCurrencyName.text = ( pair?.fromPairName ?? "" )
+            currencyRate.text = "\(pair?.currentRates ?? 0)"
+            toCurrencyName.text = ( pair?.toPairName ?? "" ) + " " + ( pair?.toPairId.uppercased() ?? "")
+            fromCurrency.text = "1 " + (pair?.fromPairId ?? "")
+
+            DLog("Displayed list table view cell data")
         }
-    }
-
-    private func bindViewModel() {
-        print(viewModel?.currentExchangeRate)
-        print(viewModel?.fromPairTitle)
-        
-        fromCurrencyName.text = ( viewModel?.fromPairTitle ?? "" )
-        currencyRate.text = viewModel?.currentExchangeRate ?? ""
-        toCurrencyName.text = ( viewModel?.toPairTitle ?? "" ) + " " + ( viewModel?.toPair.uppercased() ?? "")
-        fromCurrency.text = "1 " + (viewModel?.fromPair ?? "")
-
-        DLog("Displayed contact list table view cell data")
     }
 }
 

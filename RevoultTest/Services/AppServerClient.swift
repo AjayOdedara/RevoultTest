@@ -8,6 +8,11 @@
 
 import Foundation
 
+fileprivate enum WebServiceUrl:String {
+    case baseUrl = "https://europe-west1-revolut-230009.cloudfunctions.net/revolut-ios?"
+    case pair = "pairs"
+}
+
 // MARK: - AppServerClient
 class AppServerClient {
     
@@ -28,19 +33,20 @@ class AppServerClient {
     }
 
     // MARK: - GetCurrencyPair
-    
-    typealias GetRateResult = Result<[CurrrencyRatePairs], GetFailureReason>
+    typealias PairResults = [String:Any]
+    typealias GetRateResult = Result<PairResults, GetFailureReason>
     typealias GetRateCompletion = (_ result: GetRateResult) -> Void
 
-    func getRates(of pairs:String, completion: @escaping GetRateCompletion) {
+    func getRates(of pairs:[String], completion: @escaping GetRateCompletion) {
         
-        guard let url = URL(string: "https://europe-west1-revolut-230009.cloudfunctions.net/revolut-ios?\(pairs)") else {
-          print("Error: cannot create URL")
+        guard let baseUrl = URL(string: WebServiceUrl.baseUrl.rawValue),
+            let url = baseUrl.append(queryParameters: pairs, with: WebServiceUrl.pair.rawValue) else {
+            print("Error: cannot create URL")
             let reason = GetFailureReason.notFound
-            completion(.failure(reason))
-          return
+              completion(.failure(reason))
+            return
+            //Result: BASE_URL?pairs=GBPEUR&pairs=GBPUSD&pairs=GBPUSD
         }
-        
         let urlRequest = URLRequest(url: url)
         // set up the session
         let config = URLSessionConfiguration.default
@@ -64,18 +70,14 @@ class AppServerClient {
           // parse the result as JSON, since that's what the API provides
           do {
             
-            guard let todo = try JSONSerialization.jsonObject(with: responseData, options: [])
-              as? [String: Any] else {
+            guard let pairResults = try JSONSerialization.jsonObject(with: responseData, options: [])
+              as? PairResults else {
                 print("error trying to convert data to JSON")
                 completion(.failure(nil))
                 return
             }
             
-            var currencyData = [CurrrencyRatePairs]()
-            for item in todo{
-                currencyData.append(CurrrencyRatePairs(dictionary: item))
-            }
-            completion(.success(payload: currencyData))
+            completion(.success(payload: pairResults))
             
           } catch  {
             print("error trying to convert data to JSON")

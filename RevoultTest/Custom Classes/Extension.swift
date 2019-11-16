@@ -25,25 +25,36 @@ extension SingleButtonDialogPresenter where Self: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
 }
-
-//MARK: - Color
-extension CGFloat {
-    static func random() -> CGFloat {
-        return CGFloat(arc4random()) / CGFloat(UInt32.max)
+extension Double {
+    /// Rounds the double to decimal places value
+    func rounded(toPlaces places:Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
     }
 }
 
-extension UIColor {
-    static func random() -> UIColor {
-        return UIColor(red:   .random(),
-                       green: .random(),
-                       blue:  .random(),
-                       alpha: 0.6)
-    }
-}
+extension URL{
+    func append(queryParameters: [String], with pairName:String) -> URL? {
+        
+        guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
+            return nil
+        }
 
-extension Date {
-    func millSecs(from pastDate:Date) -> String{
-        return String(format: "%.2f", ceil(self.timeIntervalSince(pastDate) * 1000.0).rounded())
+        let urlQueryItems = queryParameters.map { value in
+            return URLQueryItem(name: pairName, value: value)
+        }
+        urlComponents.queryItems = urlQueryItems
+        return urlComponents.url
     }
+
+    /*
+     usage
+     
+     if let url = URL(string: "BASE_URL"),
+     let appendedURL = url.append(queryParameters: ["GBPEUR", "GBPUSD", "GBPUSD"]) {
+
+         print(appendedURL)
+         //Result: BASE_URL?pairs=GBPEUR&pairs=GBPUSD&pairs=GBPUSD
+     }
+     */
 }

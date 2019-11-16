@@ -15,20 +15,13 @@ class CurrencyPairViewController: UIViewController {
     @IBOutlet var headerView: UIView!
     @IBOutlet var addPairsDefaultView: UIView!
     
-    let currencyPairViewModel: CurrencyPairViewModel = CurrencyPairViewModel()
-    
+    private let currencyPairViewModel: CurrencyPairViewModel = CurrencyPairViewModel()
+    private let updateRateTiemr = RepeatingTimer(timeInterval: 1)
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initTableView()
         bindViewModel()
-
-        currencyPairViewModel.delegate = self
-        // setup container and get data
-        currencyPairViewModel.loadCurrenciesPairs { () in
-            // Reload table view when receive call back
-            self.reloadTableData()
-        
-        }
         
         // To add data
         /*
@@ -57,15 +50,41 @@ class CurrencyPairViewController: UIViewController {
 
             
     }
+    private func bindViewModel() {
+        print("bindAndFire Start")
+//        currencyPairViewModel.currencyPairCells.bindAndFire() { [weak self] _ in
+//            DispatchQueue.main.async {
+//                print("bindAndFire Compelete")
+//                self?.reloadTableData()
+//            }
+//        }
+        updateRateTiemr.eventHandler = {
+            print("Timer Fired")
+            self.currencyPairViewModel.getRatesOfCurrentPairs()
+        }
+        
+        currencyPairViewModel.loadCurrenciesPairs {
+            self.reloadTableData()
+            self.updateRateTiemr.resume()
+        }
+        
+    }
     
-    func reloadTableData(){
+    private func initTableView(){
+        currencyPairTableView.tableHeaderView = headerView
+        currencyPairViewModel.delegate = self
+        currencyPairTableView.dataSource = currencyPairViewModel
+        currencyPairTableView.tableFooterView = UIView()
+        currencyPairTableView.estimatedRowHeight = 95
+        currencyPairTableView.rowHeight = UITableView.automaticDimension
+    }
+    private func reloadTableData(){
         // Reload table view
         DispatchQueue.main.async {
             self.currencyPairTableView.reloadData()
-            let numberOfObjects = self.currencyPairViewModel.dataProvider?.numberOfItemsInSection(0) ?? 0
-            
+            let numberOfPairs = self.currencyPairViewModel.dataProvider?.currencyPairs().count ?? 0
             // Show and hide empty measssage
-            self.addPairsDefaultView.isHidden = numberOfObjects > 0 ? true : false
+            self.addPairsDefaultView.isHidden = numberOfPairs > 0 ? true : false
         }
     }
     
@@ -81,36 +100,27 @@ class CurrencyPairViewController: UIViewController {
         self.navigationController?.present(currencyDetail, animated: true)
     }
     
-    func bindViewModel() {
-        currencyPairTableView.tableHeaderView = headerView
-        currencyPairTableView.dataSource = currencyPairViewModel
-        currencyPairTableView.tableFooterView = UIView()
-        currencyPairTableView.estimatedRowHeight = 50.0
-        currencyPairTableView.rowHeight = UITableView.automaticDimension
-        
-    }
+    
 }
 
 // MARK: Sync Data Delegate
 extension CurrencyPairViewController: UpdateRateDataDelegate{
     func updateData() {
-        reloadTableData()
+        let cells = currencyPairTableView.visibleCells
+        for cell in cells{
+            let currntCell = cell as? CurrencyPairListCell
+            let cellIndex = Int(currntCell?.pair?.indexId ?? "1" ) ?? 1
+            let currentObj = currencyPairViewModel.dataProvider?.currencyPairs() ?? [CurrencyPair]()
+            currntCell?.currencyRate.text = "\(currentObj[cellIndex - 1].currentRates)"
+        }
+        //let
+        //reloadTableData()
     }
 }
 // MARK: Core Data Insert Delegate
 extension CurrencyPairViewController: CoreDataInsertDelegate{
     func insertIntoPairs(with pairToAdd: String) {
         // Insert new pair in List
-        currencyPairViewModel.insertIntoPairs(with: pairToAdd)
-//        { (isSuccess) in
-//            if isSuccess{
-//                // Reload table view when receive call back
-//                DispatchQueue.main.async {
-//                    self.currencyPairTableView.reloadData()
-//                }
-//            }else{
-//               DLog("Failed to insert into Pair")
-//            }
-//        }
+        currencyPairViewModel.insertPair(with: pairToAdd)
     }
 }

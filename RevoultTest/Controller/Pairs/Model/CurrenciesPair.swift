@@ -10,6 +10,7 @@ import Foundation
 
 class CurrrencyRatePairs: NSObject {
     
+    var indexId:NSNumber?
     var id:String
     var toPairId:String
     var toPairName:String
@@ -18,12 +19,12 @@ class CurrrencyRatePairs: NSObject {
     var currentRates:String
     
     init(dictionary: (key:String, value:Any)) {
-        print(dictionary)
-        print(dictionary.key)
         
+        print(dictionary)
         let indexFirstCurrency = dictionary.key.index(dictionary.key.startIndex, offsetBy: 3)
         let second = dictionary.key.suffix(3)
         let mySubstring = dictionary.key[..<indexFirstCurrency] // Hello
+        
         self.id = dictionary.key
         self.toPairId = String(second)
         self.toPairName = dictionary.key

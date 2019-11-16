@@ -21,13 +21,13 @@ class CurrencyPairViewModel:NSObject{
     var container: NSPersistentContainer?
     var dataProvider: FetchedResultsDataProvider<CurrencyPair>?
     
-    enum CurrencyPairTableViewCellType {
-        case normal(cellViewModel: CurrencyPairCellViewModel)
-        case error(message: String)
-        case empty
-    }
-    let currencyPairCells = Bindable([CurrencyPairTableViewCellType]())
-    
+//    enum CurrencyPairTableViewCellType {
+//        case normal(cellViewModel: CurrencyPair)
+//        case error(message: String)
+//        case empty
+//    }
+//    let currencyPairCells = Bindable([CurrencyPairTableViewCellType]())
+    //https://stackoverflow.com/a/28258374
     weak var delegate: UpdateRateDataDelegate?
     var currentPairs = [String]()
     
@@ -39,40 +39,20 @@ class CurrencyPairViewModel:NSObject{
         self.appServerClient = appServerClient
     }
     
-    /*
-     Add currency from list
-     Make API call with currency + Plus if old added then add to it in URL
-     Save Data
-     Display it
-     
-     */
-    func prepareURL() -> String{
-        var url = ""
-        for currencyId in self.currentPairs{
-            url = url + "pairs=" + currencyId + "&"
-        }
-        return String(url.dropLast())
-    }
     func getRatesOfCurrentPairs() {
-        //pairs=GBPEUR&pairs=GBPUSD
-        appServerClient.getRates(of: prepareURL(), completion: { [weak self] result in
+        
+        appServerClient.getRates(of: self.currentPairs, completion: { [weak self] result in
             switch result {
             case .success(let pairs):
                 print(pairs)
-                guard pairs.count > 0 else {
-                    self?.currencyPairCells.value = [.empty]
-                    return
-                }
-                self?.currencyPairCells.value = pairs.compactMap {
-                    .normal(cellViewModel: $0 as CurrencyPairCellViewModel)
-                }
-//                self?.updateData(data: pairs){ (isSuccess) in
-//                    self?.loadCurrenciesPairs { () in
-//                        self?.delegate?.updateData()
-//                    }
-//                }
+                self?.updatePairs(data: pairs, { (success) in
+                    self?.loadCurrenciesPairs {
+                        self?.delegate?.updateData()
+                    }
+                })
             case .failure(let error):
-                self?.currencyPairCells.value = [.error(message: error?.localizedDescription ?? "Error occurred")]
+                print(error?.localizedDescription)
+//                self?.currencyPairCells.value = [.error(message: error?.localizedDescription ?? "Error occurred")]
             }
         })
     }
@@ -84,7 +64,6 @@ class CurrencyPairViewModel:NSObject{
                 DLog(error?.localizedDescription ?? "Failed to load Persistent Stores")
                 return
             }
-            
             
             let context = container.viewContext
             context.automaticallyMergesChangesFromParent = true
@@ -101,32 +80,51 @@ class CurrencyPairViewModel:NSObject{
         self.container = container
     }
     
-    func insertIntoPairs(with newPair:String) {
+    func insertPair(with newPair:String) {
         self.currentPairs.append(newPair)
-        getRatesOfCurrentPairs()
-    }
-    func updateData(data pairToAdd: [CurrrencyRatePairs], _ completionBlock : @escaping (Bool)->()){
         guard let container = container else {
             return
         }
         container.performBackgroundTask{(moc) in
-            for pair in pairToAdd{
-                
-                let mocIds = CurrencyPair.update(moc, pair: pair)
-                if mocIds.count == 0{
-                    CurrencyPair.insertInto(moc, pair: pair)
-                    do {
-                        try moc.save()
-                    } catch {
-                        DLog(error.localizedDescription)
-                    }
-                }else{
-                    let changes = [NSUpdatedObjectsKey: mocIds]
-                    NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [moc])
-                }
+            let index = "\((self.dataProvider?.currencyPairs().count ?? 0) + 1)"
+            CurrencyPair.insertInto(moc, pair: (id: newPair, index: index))
+            do {
+                try moc.save()
+            } catch {
+                DLog(error.localizedDescription)
             }
-            
+        }
+    }
+    func updatePairs(data pairToAdd: AppServerClient.PairResults, _ completionBlock : @escaping (Bool)->()){
+        guard let container = container else {
+            return
+        }
+        container.performBackgroundTask{(moc) in
+            pairToAdd.forEach { (pair) in
+                CurrencyPair.update(moc, pair: (id: pair.key, value: (pair.value as? Double ?? 0.0).rounded(toPlaces:4)))
+            }
             completionBlock(true)
+        }
+    }
+    func deletePair(objectOf id:String) {
+        print("Before Pair \(currentPairs)")
+        currentPairs = currentPairs.filter { $0 != id }
+        print("After Pair \(currentPairs)")
+        
+        
+        guard let container = container else {
+            return
+        }
+        container.performBackgroundTask{(moc) in
+            let context = container.viewContext
+            context.automaticallyMergesChangesFromParent = true
+            
+            let objectToDelete = self.dataProvider?.currencyPairs().filter{$0.pairId == id}
+            guard let delete = objectToDelete?.first else {
+                print("No object found")
+                return
+            }
+            context.delete(delete)
         }
     }
 }
@@ -136,16 +134,27 @@ extension CurrencyPairViewModel: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // get number of rows count for each section
-        return currencyPairCells.value.count
+        return dataProvider?.numberOfItemsInSection(section) ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch currencyPairCells.value[indexPath.row] {
-        case .normal(let viewModel):
+        
+        guard let provider = dataProvider?.object(at: indexPath) else { return UITableViewCell() }
+        
+        // Configure Cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: CurrencyPairListCell.identifier, for: indexPath) as? CurrencyPairListCell {
+            // set cell data
+            cell.pair = provider
+            return cell
+        }
+        DLog("Contact list table view failed to return cell")
+        return UITableViewCell()
+        /*switch currencyPairCells.value[indexPath.row] {
+        case .normal(let pair):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CurrencyPairListCell.identifier) as? CurrencyPairListCell else {
                 return UITableViewCell()
             }
-            cell.viewModel = viewModel
+            cell.pair = pair
             return cell
             
         case .error(let message):
@@ -159,6 +168,17 @@ extension CurrencyPairViewModel: UITableViewDataSource {
             cell.isUserInteractionEnabled = false
             cell.textLabel?.text = "No currencies available"
             return cell
+        }*/
+        
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            guard let cell = tableView.cellForRow(at: indexPath) as? CurrencyPairListCell, let pair = cell.pair else {
+                print("Failed to delete cell")
+                return
+            }
+            deletePair(objectOf: pair.pairId ?? "")
+            tableView.deleteRows(at: [indexPath], with: .left)
         }
     }
 }
