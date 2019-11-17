@@ -28,6 +28,7 @@ class CurrenciesViewModel:NSObject{
         appServerClient.getCurrency(completion: { [weak self] result in
             switch result {
             case .success(let currencies):
+                
                 guard currencies.count > 0 else {
                     self?.currencyCells.value = [.empty]
                     return
@@ -57,9 +58,8 @@ extension CurrenciesViewModel: UITableViewDataSource {
            guard let cell = tableView.dequeueReusableCell(withIdentifier: CurrencyTableViewCell.identifier) as? CurrencyTableViewCell else {
                return UITableViewCell()
            }
-        
-           cell.viewModel = viewModel
            
+           cell.viewModel = viewModel
            return cell
        case .error(let message):
            let cell = UITableViewCell()
@@ -69,7 +69,7 @@ extension CurrenciesViewModel: UITableViewDataSource {
        case .empty:
            let cell = UITableViewCell()
            cell.isUserInteractionEnabled = false
-           cell.textLabel?.text = "No currencies available"
+           cell.textLabel?.text = "No currencies available for exchange"
            return cell
        }
    }

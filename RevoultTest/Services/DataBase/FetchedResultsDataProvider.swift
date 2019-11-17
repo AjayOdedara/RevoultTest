@@ -8,10 +8,10 @@
 
 
 import CoreData
+import UIKit
+
 
 class FetchedResultsDataProvider<T>: NSObject, NSFetchedResultsControllerDelegate, DataProvider where T: NSFetchRequestResult {
-    
-    
     
     private let fetchedResultsController: NSFetchedResultsController<T>
 
@@ -37,6 +37,17 @@ class FetchedResultsDataProvider<T>: NSObject, NSFetchedResultsControllerDelegat
         return fetchedResultsController.sections?.first?.numberOfObjects ?? 0
     }
     
+   //TODO DELETE
+    override func didChange(_ changeKind: NSKeyValueChange, valuesAt indexes: IndexSet, forKey key: String) {
+        switch changeKind {
+        case .insertion:
+            print("Inserted")
+        case .removal:
+            print("removed")
+        default:
+            print("def")
+        }
+    }
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     }
 }

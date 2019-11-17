@@ -18,48 +18,33 @@ public class CurrencyPair: NSManagedObject {
     @NSManaged public var fromPairName: String
     @NSManaged public var currentRates: Double
     @NSManaged public var currencyPair: String
-    @NSManaged public var indexId: String
-    
-//    public init(dictionary: (key:String, value:Any)) {
-//
-//        print(dictionary)
-//        let indexFirstCurrency = dictionary.key.index(dictionary.key.startIndex, offsetBy: 3)
-//        let second = dictionary.key.suffix(3)
-//        let mySubstring = dictionary.key[..<indexFirstCurrency] // Hello
-//
-//        self.id = dictionary.key
-//        self.toPairId = String(second)
-//        self.toPairName = dictionary.key
-//        self.fromPairId = String(mySubstring)
-//        self.fromPairName = dictionary.key
-//        self.currentRates = "\(dictionary.value as? Double ?? 0.0)"
-//    }
-    
+    @NSManaged public var indexId: Double
+
     static func defaultFetchRequest() -> NSFetchRequest<CurrencyPair> {
         // featch data of Pairs
         let request = NSFetchRequest<CurrencyPair>(entityName: "CurrencyPair")
-        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(indexId), ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(indexId), ascending: false)]
         return request
     }
     
-    static func insertInto(_ context: NSManagedObjectContext, pair: (id:String, index:String)) {
+    static func insertInto(_ context: NSManagedObjectContext, pair: (id:String, index:Double)) {
         // insert into Pair
         
         let indexFirstCurrency = pair.id.index(pair.id.startIndex, offsetBy: 3)
         let toPairId = pair.id.suffix(3)
-        let fromId = pair.id[..<indexFirstCurrency] // Hello
+        let fromId = pair.id[..<indexFirstCurrency]
         
         let pairToAdd = CurrencyPair(context: context)
         pairToAdd.indexId = pair.index
         pairToAdd.pairId = pair.id
         pairToAdd.toPairId = String(toPairId)
-        pairToAdd.toPairName = pair.id
+        pairToAdd.toPairName = String(toPairId).countryBy() ?? String(toPairId) // TODO: Refactor
         pairToAdd.fromPairId = String(fromId)
-        pairToAdd.fromPairName = pair.id
+        pairToAdd.fromPairName = String(fromId).countryBy() ?? String(fromId) // TODO: Refactor
         pairToAdd.currentRates = 0
     }
     
-    static func update(_ moc: NSManagedObjectContext, pair: (id:String, value:Double)){
+    static func update(pair  moc: NSManagedObjectContext, pair: (id:String, value:Double)){
         // Creates new batch update request for entity `Dog`
         let updateRequest = NSBatchUpdateRequest(entityName: "CurrencyPair")
         let predicate = NSPredicate(format: "pairId == %@", pair.id)
@@ -80,6 +65,22 @@ public class CurrencyPair: NSManagedObject {
         } catch {
             fatalError("Failed to execute request: \(error)")
         }
+    }
+    static func delete(pair  moc: NSManagedObjectContext, pairId:String){
+        // Creates new batch update request for entity `Dog`
+        let request = NSFetchRequest<CurrencyPair>(entityName: "CurrencyPair")
+        request.predicate = NSPredicate(format: "pairId == %@", pairId)
+        
+        do {
+            let results = try moc.fetch(request)
+            guard let object = results.first else{
+                return
+            }
+            moc.delete(object)
+        }catch {
+            
+        }
+        
     }
 }
 //struct CurrentPair {

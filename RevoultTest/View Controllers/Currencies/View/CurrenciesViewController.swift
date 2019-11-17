@@ -53,14 +53,18 @@ class CurrenciesViewController: UIViewController {
 extension CurrenciesViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         DLog("User clicked on cell")
-        // When user select row, push to the Contact Detail View Controller
+        // When user select row, push animation with second currency to pick
         guard let cell = tableView.cellForRow(at: indexPath) as? CurrencyTableViewCell, let currencyId = cell.viewModel?.currencyName else {
             DLog("Failed to select pair on currencies")
             return
         }
         
         if currencyPair == nil{
+            
             currencyPair = currencyId
+            currencyViewModel.currencyCells.value.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .none)
+            
             let transition = CATransition()
             transition.type = CATransitionType.push
             transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
@@ -70,16 +74,15 @@ extension CurrenciesViewController: UITableViewDelegate{
             tableView.layer.add(transition, forKey: "UITableViewReloadDataAnimationKey")
             // Update your data source here
             tableView.reloadData()
+            DLog("User selected first pair currency")
+            
         }else{
             currencyPair = (currencyPair ?? "")  + currencyId
-            
             dismiss(animated: true) {
                 guard let pairs = self.currencyPair else{return}
                 self.insertNewPair(with: pairs)
             }
+            DLog("User selected second pair currency")
         }
-                
-        
-        DLog("Pushed animation to select second currency")
     }
 }

@@ -27,10 +27,13 @@ class CurrencyPairListCell: UITableViewCell {
     var pair: CurrencyPair? {
         // set cell data
         didSet {
-            fromCurrencyName.text = ( pair?.fromPairName ?? "" )
-            currencyRate.text = "\(pair?.currentRates ?? 0)"
-            toCurrencyName.text = ( pair?.toPairName ?? "" ) + " " + ( pair?.toPairId.uppercased() ?? "")
-            fromCurrency.text = "1 " + (pair?.fromPairId ?? "")
+            guard let pair = pair else {
+                return
+            }
+            fromCurrencyName.text = pair.fromPairName
+            currencyRate.text = pair.currentRates > 0 ? "\(pair.currentRates)" : "."
+            toCurrencyName.text = (pair.toPairName) + " " + ( pair.toPairId.uppercased())
+            fromCurrency.text = "1 " + (pair.fromPairId)
 
             DLog("Displayed list table view cell data")
         }

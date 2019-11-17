@@ -8,9 +8,24 @@
 
 import Foundation
 
+
+enum Result<T, U: Error> {
+    case success(payload: T)
+    case failure(U?)
+}
+
+enum EmptyResult<U: Error> {
+    case success
+    case failure(U?)
+}
+
 fileprivate enum WebServiceUrl:String {
     case baseUrl = "https://europe-west1-revolut-230009.cloudfunctions.net/revolut-ios?"
     case pair = "pairs"
+    
+    struct Files {
+        static var currencies = "currencies"
+    }
 }
 
 // MARK: - AppServerClient
@@ -22,10 +37,7 @@ class AppServerClient {
         }
         return Static.instance
     }
-    
-    
-    
-    // MARK: - GetFruits
+    // MARK: - Get Rates
     enum GetFailureReason: Int, Error {
         case unAuthorized = 401
         case notFound = 404
@@ -42,10 +54,8 @@ class AppServerClient {
         guard let baseUrl = URL(string: WebServiceUrl.baseUrl.rawValue),
             let url = baseUrl.append(queryParameters: pairs, with: WebServiceUrl.pair.rawValue) else {
             print("Error: cannot create URL")
-            let reason = GetFailureReason.notFound
-              completion(.failure(reason))
+            completion(.failure(GetFailureReason.notFound))
             return
-            //Result: BASE_URL?pairs=GBPEUR&pairs=GBPUSD&pairs=GBPUSD
         }
         let urlRequest = URLRequest(url: url)
         // set up the session
@@ -56,32 +66,23 @@ class AppServerClient {
           (data, response, error) in
           // check for any errors
           guard error == nil else {
-            print("error calling GET on /todos/1")
-            print(error!)
-            let reason = GetFailureReason.serverError
-            completion(.failure(reason))
-            return
-          }
-          // make sure we got data
-          guard let responseData = data else {
-            print("Error: did not receive data")
+            print("\(error?.localizedDescription ?? "error calling GET ")")
+            completion(.failure(GetFailureReason.serverError))
             return
           }
           // parse the result as JSON, since that's what the API provides
           do {
-            
-            guard let pairResults = try JSONSerialization.jsonObject(with: responseData, options: [])
+            guard let responseData = data, let pairResults = try JSONSerialization.jsonObject(with: responseData, options: [])
               as? PairResults else {
+                print("Error: did not receive data")
                 print("error trying to convert data to JSON")
                 completion(.failure(nil))
                 return
             }
-            
             completion(.success(payload: pairResults))
             
           } catch  {
-            print("error trying to convert data to JSON")
-            print(error.localizedDescription)
+            print("error trying to convert data to JSON = \(error.localizedDescription)")
             completion(.failure(nil))
             return
           }
@@ -90,19 +91,20 @@ class AppServerClient {
         task.resume()
     }
     
-    // MARK: - GetCurrencies
+    // MARK: - Get Currencies
     
     typealias GetCurrencyResult = Result<[Currencies], GetFailureReason>
     typealias GetCurrencyCompletion = (_ result: GetCurrencyResult) -> Void
     
     func getCurrency(completion: @escaping GetCurrencyCompletion) {
-        if let url = Bundle.main.url(forResource: "currencies", withExtension: "json") {
+        if let url = Bundle.main.url(forResource: WebServiceUrl.Files.currencies, withExtension: "json") {
             do {
                 let data = try Data(contentsOf: url)
                 let object = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                if let dictionary = object as? [String] {
+                if let currencies = object as? [String] {
                     var currencyData = [Currencies]()
-                    for item in dictionary{
+                    
+                    for item in currencies{
                         currencyData.append(Currencies(name: item))
                     }
                     completion(.success(payload: currencyData))

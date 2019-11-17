@@ -7,9 +7,6 @@
 //
 
 import Foundation
-/// RepeatingTimer mimics the API of DispatchSourceTimer but in a way that prevents
-/// crashes that occur from calling resume multiple times on a timer that is
-/// already resumed (noted by https://github.com/SiftScience/sift-ios/issues/52
 class RepeatingTimer {
 
     let timeInterval: TimeInterval
@@ -29,12 +26,12 @@ class RepeatingTimer {
 
     var eventHandler: (() -> Void)?
 
-    private enum State {
+    enum State {
         case suspended
         case resumed
     }
 
-    private var state: State = .suspended
+    var state: State = .suspended
 
     deinit {
         timer.setEventHandler {}
