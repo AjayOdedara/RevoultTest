@@ -1,11 +1,11 @@
-/* 
-  Localizable.strings
-  PhoneBook
 
-  Created by Shiva's on 11/1/19.
-  Copyright © 2019 Bharat Bapodara. All rights reserved.
-*/
+//  RevoultTest
+//
+//  Created by Ajay Odedra on 17/11/19.
+//  Copyright © 2019 Ajay Odedra. All rights reserved.
+
 
 // Currency Pair List View
 
 "currency_pair_add_currency_pair" = "Add Currency Pair";
+"currency_pair_add_pair_description" = "Choose a currency pari to compare their live rates";

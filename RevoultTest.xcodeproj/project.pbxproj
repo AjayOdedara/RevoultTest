@@ -20,10 +20,8 @@
 		9AA0C4D023723CE80035C627 /* LogHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0C4CE23723CE80035C627 /* LogHelper.swift */; };
 		9AA0C4D923723D5D0035C627 /* FetchedResultsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0C4D623723D5D0035C627 /* FetchedResultsDataProvider.swift */; };
 		9AA0C4DA23723D5D0035C627 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0C4D723723D5D0035C627 /* DataProvider.swift */; };
-		9AA0C4DB23723D5D0035C627 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0C4D823723D5D0035C627 /* LocalizationManager.swift */; };
 		9AA0C4DD23723FEE0035C627 /* AppServerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0C4DC23723FEE0035C627 /* AppServerClient.swift */; };
 		9AA0C4DF237240520035C627 /* Currencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0C4DE237240520035C627 /* Currencies.swift */; };
-		9AA0C4E12372406E0035C627 /* CurrenciesPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0C4E02372406E0035C627 /* CurrenciesPair.swift */; };
 		9AA0C4E3237241770035C627 /* CurrencyPairViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0C4E2237241770035C627 /* CurrencyPairViewModel.swift */; };
 		9AA0C4E52372433E0035C627 /* Contacts+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0C4E42372433E0035C627 /* Contacts+CoreDataClass.swift */; };
 		9AA0C4E72372442C0035C627 /* CurrencyPairListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0C4E62372442C0035C627 /* CurrencyPairListCell.swift */; };
@@ -40,6 +38,9 @@
 		9AA5A98D2381F1040053DB95 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9AA5A98B2381EFE80053DB95 /* Roboto-Light.ttf */; };
 		9AA5A98E2381F1070053DB95 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9AA5A98A2381EFE80053DB95 /* Roboto-Regular.ttf */; };
 		9AA5A990238219660053DB95 /* BindablTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5A98F238219660053DB95 /* BindablTests.swift */; };
+		9AA5A99423821B7C0053DB95 /* CurrenciesListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5A99323821B7C0053DB95 /* CurrenciesListTests.swift */; };
+		9AA5A99623821DB20053DB95 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5A99523821DB20053DB95 /* MockData.swift */; };
+		9AA5A99B2382231D0053DB95 /* CurrencyPairTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5A99A2382231D0053DB95 /* CurrencyPairTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,10 +80,8 @@
 		9AA0C4CE23723CE80035C627 /* LogHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogHelper.swift; sourceTree = "<group>"; };
 		9AA0C4D623723D5D0035C627 /* FetchedResultsDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsDataProvider.swift; sourceTree = "<group>"; };
 		9AA0C4D723723D5D0035C627 /* DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
-		9AA0C4D823723D5D0035C627 /* LocalizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		9AA0C4DC23723FEE0035C627 /* AppServerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppServerClient.swift; sourceTree = "<group>"; };
 		9AA0C4DE237240520035C627 /* Currencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currencies.swift; sourceTree = "<group>"; };
-		9AA0C4E02372406E0035C627 /* CurrenciesPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesPair.swift; sourceTree = "<group>"; };
 		9AA0C4E2237241770035C627 /* CurrencyPairViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPairViewModel.swift; sourceTree = "<group>"; };
 		9AA0C4E42372433E0035C627 /* Contacts+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contacts+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9AA0C4E62372442C0035C627 /* CurrencyPairListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPairListCell.swift; sourceTree = "<group>"; };
@@ -99,6 +98,9 @@
 		9AA5A98A2381EFE80053DB95 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		9AA5A98B2381EFE80053DB95 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		9AA5A98F238219660053DB95 /* BindablTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindablTests.swift; sourceTree = "<group>"; };
+		9AA5A99323821B7C0053DB95 /* CurrenciesListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesListTests.swift; sourceTree = "<group>"; };
+		9AA5A99523821DB20053DB95 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		9AA5A99A2382231D0053DB95 /* CurrencyPairTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPairTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,9 +176,12 @@
 		9AA0C49A237235200035C627 /* RevoultTestTests */ = {
 			isa = PBXGroup;
 			children = (
-				9AA5A98F238219660053DB95 /* BindablTests.swift */,
+				9AA5A9972382214A0053DB95 /* RateCurrencyPairs */,
+				9AA5A99223821B380053DB95 /* Currencies */,
+				9AA5A99123821B1E0053DB95 /* Bindable */,
 				9AA0C49B237235200035C627 /* RevoultTestTests.swift */,
 				9AA0C49D237235200035C627 /* Info.plist */,
+				9AA5A99523821DB20053DB95 /* MockData.swift */,
 			);
 			path = RevoultTestTests;
 			sourceTree = "<group>";
@@ -275,7 +280,6 @@
 			isa = PBXGroup;
 			children = (
 				9AA0C4E42372433E0035C627 /* Contacts+CoreDataClass.swift */,
-				9AA0C4E02372406E0035C627 /* CurrenciesPair.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -316,7 +320,6 @@
 			children = (
 				9AA5A987238190990053DB95 /* DataBase */,
 				9AA5A988238190A50053DB95 /* API */,
-				9AA5A989238190B50053DB95 /* Localization */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -346,14 +349,6 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		9AA5A989238190B50053DB95 /* Localization */ = {
-			isa = PBXGroup;
-			children = (
-				9AA0C4D823723D5D0035C627 /* LocalizationManager.swift */,
-			);
-			path = Localization;
-			sourceTree = "<group>";
-		};
 		9AA5A98C2381EFEF0053DB95 /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,6 +356,30 @@
 				9AA5A98A2381EFE80053DB95 /* Roboto-Regular.ttf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		9AA5A99123821B1E0053DB95 /* Bindable */ = {
+			isa = PBXGroup;
+			children = (
+				9AA5A98F238219660053DB95 /* BindablTests.swift */,
+			);
+			path = Bindable;
+			sourceTree = "<group>";
+		};
+		9AA5A99223821B380053DB95 /* Currencies */ = {
+			isa = PBXGroup;
+			children = (
+				9AA5A99323821B7C0053DB95 /* CurrenciesListTests.swift */,
+			);
+			path = Currencies;
+			sourceTree = "<group>";
+		};
+		9AA5A9972382214A0053DB95 /* RateCurrencyPairs */ = {
+			isa = PBXGroup;
+			children = (
+				9AA5A99A2382231D0053DB95 /* CurrencyPairTests.swift */,
+			);
+			path = RateCurrencyPairs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -500,8 +519,6 @@
 			files = (
 				9AA0C4DD23723FEE0035C627 /* AppServerClient.swift in Sources */,
 				9AA5A97223771CDE0053DB95 /* Bindable.swift in Sources */,
-				9AA0C4E12372406E0035C627 /* CurrenciesPair.swift in Sources */,
-				9AA0C4DB23723D5D0035C627 /* LocalizationManager.swift in Sources */,
 				9AA0C4B9237238030035C627 /* SceneDelegate.swift in Sources */,
 				9AA5A97F23802AA10053DB95 /* RepeatingTimer.swift in Sources */,
 				9AA0C4DA23723D5D0035C627 /* DataProvider.swift in Sources */,
@@ -529,6 +546,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AA5A990238219660053DB95 /* BindablTests.swift in Sources */,
+				9AA5A99623821DB20053DB95 /* MockData.swift in Sources */,
+				9AA5A99423821B7C0053DB95 /* CurrenciesListTests.swift in Sources */,
+				9AA5A99B2382231D0053DB95 /* CurrencyPairTests.swift in Sources */,
 				9AA0C49C237235200035C627 /* RevoultTestTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

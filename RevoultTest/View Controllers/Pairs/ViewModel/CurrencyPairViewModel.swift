@@ -2,7 +2,7 @@
 //  CurrenciesViewModel.swift
 //  RevoultTest
 //
-//  Created by Ajay Odedra on 05/11/19.
+//  Created by Ajay Odedra on 12/11/19.
 //  Copyright © 2019 Ajay Odedra. All rights reserved.
 //
 
@@ -68,7 +68,7 @@ class CurrencyPairViewModel:NSObject{
         self.container = container
     }
     
-    func insertPair(with newPair:String) {
+    func insertPair(with newPair:String, _ completionBlock : @escaping (Bool)->()) {
 //        self.currentPairs.append(newPair)
         guard let container = container else {
             return
@@ -80,9 +80,11 @@ class CurrencyPairViewModel:NSObject{
             do {
                 try moc.save()
                 self.loadCurrenciesPairs { self.delegate?.reloadTableCells() }
-                
+                //optional
+                completionBlock(true)
             } catch {
                 DLog(error.localizedDescription)
+                completionBlock(false)
             }
         }
     }
@@ -144,6 +146,7 @@ extension CurrencyPairViewModel: UITableViewDataSource {
             }
             print("\(provider[id].pairId)")
             deletePair(objectOf: provider[id].pairId ){ (isSuccess) in
+                
                 if isSuccess{
                     DispatchQueue.main.async {
                         tableView.beginUpdates()

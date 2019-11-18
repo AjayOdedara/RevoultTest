@@ -2,7 +2,7 @@
 //  CurrencyPairViewController.swift
 //  RevoultTest
 //
-//  Created by Ajay Odedra on 05/11/19.
+//  Created by Ajay Odedra on 12/11/19.
 //  Copyright © 2019 Ajay Odedra. All rights reserved.
 //
 
@@ -14,7 +14,9 @@ class CurrencyPairViewController: UIViewController {
     @IBOutlet var currencyPairTableView: UITableView!
     @IBOutlet var headerView: UIView!
     @IBOutlet var addPairsDefaultView: UIView!
-    @IBOutlet var addCurrencyPair: UIButton!
+    @IBOutlet var addCurrencyPairHeaderBtn: UIButton!
+    @IBOutlet var addCurrencyPairViewBtn: UIButton!
+    @IBOutlet var addPairDescriptionLbl: UILabel!
     
     private let currencyPairViewModel: CurrencyPairViewModel = CurrencyPairViewModel()
     private let updateRateTiemr = RepeatingTimer(timeInterval: 1)
@@ -42,7 +44,15 @@ class CurrencyPairViewController: UIViewController {
     }
     
     private func initTableView(){
-        addCurrencyPair.contentHorizontalAlignment = .left
+        //Localization
+        addPairDescriptionLbl.text = NSLocalizedString("currency_pair_add_pair_description", comment: "Add Currency pair more inforomaton of title")
+        addCurrencyPairHeaderBtn.setTitle(NSLocalizedString("currency_pair_add_currency_pair", comment: "Add Currency pair button title"), for: .normal)
+        addCurrencyPairViewBtn.setTitle(NSLocalizedString("currency_pair_add_currency_pair", comment: "Add Currency pair button title"), for: .normal)
+        
+        
+        
+        addCurrencyPairHeaderBtn.contentHorizontalAlignment = .left
+        // Tableview init
         currencyPairViewModel.delegate = self
         currencyPairTableView.dataSource = currencyPairViewModel
         currencyPairTableView.tableFooterView = UIView()
@@ -86,16 +96,15 @@ class CurrencyPairViewController: UIViewController {
             guard let currntCell = cell as? CurrencyPairListCell,let id = currencyPairTableView.indexPath(for: currntCell)?.row else{
                 return
             }
-//            let id = currntCell.currencyRate.tag // TODO: we have to reload table after row deletion
             let currentObj = currencyPairViewModel.dataProvider?.currencyPairs() ?? [CurrencyPair]()
             currntCell.currencyRate.text = "\(currentObj[id].currentRates)"
         }
     }
     
     @IBAction func addPairClicked(_ sender: UIButton) {
-        // When user select row, push to the Contact Detail View Controller
+        // When user select Add Pair, Navigate to Cuurencies View Controller
         guard let currencyDetail = self.storyboard?.instantiateViewController(identifier: "currenciesViewController") as? CurrenciesViewController else {
-            DLog("Failed to present contact detail view controller")
+            DLog("Failed to present  Cuurencies View Controller")
             return
         }
         DLog("present view controller")
@@ -121,12 +130,6 @@ extension CurrencyPairViewController: UpdateRateDataDelegate{
             self.currencyPairTableView.reloadData()
         }
         setUpView()
-        //TODO: Refactore it
-//        DispatchQueue.main.async {
-//            self.currencyPairTableView.beginUpdates()
-//            self.currencyPairTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .top)
-//            self.currencyPairTableView.endUpdates()
-//        }
     }
 }
 // MARK: Core Data Insert Delegate
@@ -136,6 +139,6 @@ extension CurrencyPairViewController: CoreDataInsertDelegate{
         if updateRateTiemr.state == .suspended{
             updateRateTiemr.resume()
         }
-        currencyPairViewModel.insertPair(with: pairToAdd)
+        currencyPairViewModel.insertPair(with: pairToAdd){_ in }
     }
 }

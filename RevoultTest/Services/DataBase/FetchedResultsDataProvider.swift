@@ -2,7 +2,7 @@
 //  FetchedResultsDataProvider.swift
 //  RevoultTest
 //
-//  Created by Ajay Odedra on 05/11/19.
+//  Created by Ajay Odedra on 12/11/19.
 //  Copyright © 2019 Ajay Odedra. All rights reserved.
 //
 
@@ -35,18 +35,6 @@ class FetchedResultsDataProvider<T>: NSObject, NSFetchedResultsControllerDelegat
 
     func numberOfItemsInSection(_ section: Int) -> Int {
         return fetchedResultsController.sections?.first?.numberOfObjects ?? 0
-    }
-    
-   //TODO DELETE
-    override func didChange(_ changeKind: NSKeyValueChange, valuesAt indexes: IndexSet, forKey key: String) {
-        switch changeKind {
-        case .insertion:
-            print("Inserted")
-        case .removal:
-            print("removed")
-        default:
-            print("def")
-        }
     }
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     }

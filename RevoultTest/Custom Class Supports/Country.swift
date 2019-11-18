@@ -7,7 +7,8 @@
 //
 
 import Foundation
-//TODO name the currency
+
+
 let codeToCountry = [
     "MXN" : "Mexican Peso",
     "CZK" : "Czech Koruna",

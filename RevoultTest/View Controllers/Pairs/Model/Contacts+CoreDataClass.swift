@@ -2,7 +2,7 @@
 //  CurrenciesPair.swift
 //  RevoultTest
 //
-//  Created by Ajay Odedra on 05/11/19.
+//  Created by Ajay Odedra on 12/11/19.
 //  Copyright © 2019 Ajay Odedra. All rights reserved.
 //
 
@@ -38,9 +38,9 @@ public class CurrencyPair: NSManagedObject {
         pairToAdd.indexId = pair.index
         pairToAdd.pairId = pair.id
         pairToAdd.toPairId = String(toPairId)
-        pairToAdd.toPairName = String(toPairId).countryBy() ?? String(toPairId) // TODO: Refactor
+        pairToAdd.toPairName = String(toPairId).countryBy() ?? String(toPairId)
         pairToAdd.fromPairId = String(fromId)
-        pairToAdd.fromPairName = String(fromId).countryBy() ?? String(fromId) // TODO: Refactor
+        pairToAdd.fromPairName = String(fromId).countryBy() ?? String(fromId)
         pairToAdd.currentRates = 0
     }
     

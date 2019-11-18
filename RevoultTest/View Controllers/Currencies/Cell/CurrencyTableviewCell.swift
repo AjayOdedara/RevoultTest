@@ -28,10 +28,8 @@ class CurrencyTableViewCell: UITableViewCell {
         guard let model = viewModel else {
             return
         }
-//        let flag = model.currencyName.flag()
-//        var countryCode = model.currencyName.flag()
         currencyName.text = model.currencyName.flag() + "  "  + model.currencyName.uppercased()
         currencyId.text = viewModel?.currencyName.countryBy()
-        //DLog("Displayed contact list table view cell data")
+        DLog("Displayed Currency list table view cell data")
     }
 }
