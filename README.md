@@ -1,4 +1,4 @@
-# Album Search || Cuurency Compare
+# Cuurency Compare
 
 A mobile application for comparing currencies live.
 
